@@ -19,6 +19,9 @@ social: false  # includes social icons at the bottom of the page
 
 I am a PhD student at USC, currently working in <a
 href="https://smithlabresearch.org/">Smith Lab</a>. 
+Although I come from a physics background, my current research is in developing
+algorithms for RNA secondary structure analysis.  
+
 
 
 <!--Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.-->
