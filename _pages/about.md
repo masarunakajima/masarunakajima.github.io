@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-description: <a href="#">Affiliations</a>. Address. Contacts. Moto. Etc.
+description: Physics PhD candidate at  <a href="https://www.usc.edu/">University of Souther California </a>
 
 profile:
   align: right
