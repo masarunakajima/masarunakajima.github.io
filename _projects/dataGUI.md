@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Data Analaysis GUI
-description: a project with a background image
+description: Interactive data analysis tool
 img: assets/img/gui.png
 importance: 1
 category: work
