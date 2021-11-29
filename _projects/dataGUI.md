@@ -25,7 +25,7 @@ University of Saskatchewan.
         {% responsive_image path: assets/img/1.jpg title: "example image" class: "img-fluid rounded z-depth-1" %}
     </div>
     <span aria-label="Plotting tool"
-    class="m-1">assets/img/gui_plot.mkv</span>
+    class="m-1">assets/img/gui_plot.mp4</span>
     <div class="col-sm mt-3 mt-md-0">
         {% responsive_image path: assets/img/3.jpg title: "example image" class: "img-fluid rounded z-depth-1" %}
     </div>
