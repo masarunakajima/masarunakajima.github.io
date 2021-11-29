@@ -24,7 +24,8 @@ University of Saskatchewan.
     <div class="col-sm mt-3 mt-md-0">
         {% responsive_image path: assets/img/1.jpg title: "example image" class: "img-fluid rounded z-depth-1" %}
     </div>
-    [![Alternate Text]({})]({assets/img/gui_plot.mp4} "Link Title")
+    ![OMD, that
+    smile...](assets/img/gui_plot.mp4){loop=""}
     <div class="col-sm mt-3 mt-md-0">
         {% responsive_image path: assets/img/3.jpg title: "example image" class: "img-fluid rounded z-depth-1" %}
     </div>
