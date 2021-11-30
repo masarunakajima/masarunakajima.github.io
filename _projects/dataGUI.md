@@ -18,10 +18,9 @@ University of Saskatchewan.
     <div class="col-sm mt-3 mt-md-0">
         {% responsive_image path: assets/img/1.jpg title: "example image" class: "img-fluid rounded z-depth-1" %}
     </div>
-    <video
-    src="assets/img/gui_plot.mp4"
-    controls="controls" style="max-width: 730px;">
-    </video>
+    <video width="320" height="240" controls>
+      <source src="assets/img/gui_plot.mp4" type="video/mp4">
+      </video>
     <div class="col-sm mt-3 mt-md-0">
         {% responsive_image path: assets/img/3.jpg title: "example image" class: "img-fluid rounded z-depth-1" %}
     </div>
