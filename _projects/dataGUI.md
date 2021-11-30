@@ -19,7 +19,7 @@ University of Saskatchewan.
         {% responsive_image path: assets/img/1.jpg title: "example image" class: "img-fluid rounded z-depth-1" %}
     </div>
     <video
-    src="assets/img/gui_plot.mp4"
+    src="https://github.com/masarunakajima/masarunakajima.github.io/tree/master/assets/img/gui_plot.mp4"
     controls="controls" style="max-width: 730px;">
     </video>
     <div class="col-sm mt-3 mt-md-0">
