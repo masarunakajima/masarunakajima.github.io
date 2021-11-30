@@ -13,18 +13,15 @@ taken from plasma discharges in STOR-M, a small experimental tokamak at
 University of Saskatchewan.
 
 
-    <!------->
-    <!--layout: page-->
-    <!--title: project-->
-    <!--description: a project with a background image-->
-    <!--img: /assets/img/12.jpg-->
-    <!------->
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
         {% responsive_image path: assets/img/1.jpg title: "example image" class: "img-fluid rounded z-depth-1" %}
     </div>
-    <img src="assets/img/gui_plot_mp4"/>
+    <video
+    src="assets/img/gui_plot.mp4"
+    controls="controls" style="max-width: 730px;">
+    </video>
     <div class="col-sm mt-3 mt-md-0">
         {% responsive_image path: assets/img/3.jpg title: "example image" class: "img-fluid rounded z-depth-1" %}
     </div>
