@@ -97,9 +97,9 @@
     {% endif %}
     {% if entry.pdf %}
       {% if entry.pdf contains '://' %}
-      <a href="{{ entry.pdf }}" class="btn btn-sm z-depth-0" role="button">PDF</a>
+      <a href="{{ entry.pdf }}" class="btn btn-sm z-depth-0" role="button" target="_blank">PDF</a>
       {% else %}
-      <a href="{{ entry.pdf | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">PDF</a>
+      <a href="{{ entry.pdf | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button" target="_blank">PDF</a>
       {% endif %}
     {% endif %}
     {% if entry.supp %}
@@ -128,19 +128,6 @@
       {% else %}
       <a href="{{ entry.slides | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">Slides</a>
       {% endif %}
-    {% endif %}
-    {% if entry.website %}
-      <a href="{{ entry.website }}" class="btn btn-sm z-depth-0" role="button">Website</a>
-    {% endif %}
-    {% if entry.url or entry.file %}
-    <p class="links">
-      {% if entry.url %}
-        [<a href="{{ entry.url }}">Link</a>]
-      {% endif %}
-      {% if entry.file %}
-        [<a href="{{site.baseurl}}/assets/pdf/{{ entry.file }} " target="_blank">pdf</a>]
-      {% endif %}
-    </p>
     {% endif %}
     </div>
 
