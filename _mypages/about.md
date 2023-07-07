@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-description: Physics PhD candidate at  <a href="https://www.usc.edu/">University of Souther California </a>
+description: Physics PhD / Software Engineer / Data Scientist
 
 profile:
   align: right
@@ -17,11 +17,10 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: false  # includes social icons at the bottom of the page
 ---
 
-I am a PhD student at USC, currently working in <a
-href="https://smithlabresearch.org/">Smith Lab</a>. 
-Although I come from a physics background, my current research is in developing
-algorithms for RNA secondary structure analysis. 
-
+From experimental plasma physics to computational biology, I have a diverse
+academic background and passion for problem solving. Programming has always
+been a part of my work, from which I have developed a strong interest in data 
+science and software engineering. 
 
 
 <!--Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.-->
