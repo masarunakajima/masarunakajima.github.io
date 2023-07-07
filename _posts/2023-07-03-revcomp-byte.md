@@ -2,7 +2,7 @@
 layout: post
 title: Reverse compliment in BAM format
 date: 2023-07-03 11:39:00
-description: Reverse compliment in BAM format
+description: Improving the efficiency by working directly with native data structure
 ---
 ## Little bit about BAM format
 
@@ -26,21 +26,21 @@ Today, I wan to focus on the query sequence stored in `bam_t` format. Each base 
 | G    | 4      | `0100` |
 | T    | 15     | `1000` |
 
-This allows packaging 2 bases in one byte. For example the sequence `ACGTA` can 
+This allows packaging 2 bases in one byte. For example the sequence `ACGTA` can
 be represented as `00010010 01001000 00010000`. That is, we can represent a
  `n`-long sequences in `ceil(n/2)` bytes. Here, let's call two bases packed in
- a byte as a **base couple**. 
+ a byte as a **base couple**.
 
- ## Reverse compliment
+## Reverse compliment
 
- In processing alignment data, we often need to reverse compliment the query. 
- For example, we may want to merge a paired-end reads, which involves taking 
+ In processing alignment data, we often need to reverse compliment the query.
+ For example, we may want to merge a paired-end reads, which involves taking
  the reverse compliment of the second read. Given a sequence represented in the
- above format, one way to accomplish is to decode the sequence into a string, 
- take the reverse compliment, and encode it back to the above format. However,  
+ above format, one way to accomplish is to decode the sequence into a string,
+ take the reverse compliment, and encode it back to the above format. However,
  it would be faster and memory efficient if we could do this without decoding
  and encoding the sequence. The method I used is to take the reverse compliment
- of each base couple and reverse the order of the base couples. The code is 
+ of each base couple and reverse the order of the base couples. The code is
  shown below.
 
 ```c
@@ -71,15 +71,15 @@ revcomp_seq_by_byte(bam1_t *aln) {
     seq[num_bytes - 1] <<= 4;
   }
 }
-``` 
+```
 
 Here, `byte_revcom_table` is a lookup table that stores the reverse compliment
 of the base couples. The function `revcom_byte_then_reverse` takes two pointers
-and reverse the compliment of the base couples between them. For example, if 
+and reverse the compliment of the base couples between them. For example, if
 the sequence of base couples is `AC GT TA`, then the function will change it to
-`TA AC GT`, which is the reverse compliment of the entire sequence. However, 
-if the number of bases is odd, then this function outputs a sequence that is 
+`TA AC GT`, which is the reverse compliment of the entire sequence. However,
+if the number of bases is odd, then this function outputs a sequence that is
 not quite the reverse compliment. For example, if the sequence of base couples
 is `AC GT T-`, then the function will change it to `-A AC GT`, where what we
-want is `AA CG T-`. The rest of the function `revcomp_seq_by_byte` takes care 
-of this case. 
+want is `AA CG T-`. The rest of the function `revcomp_seq_by_byte` takes care
+of this case.

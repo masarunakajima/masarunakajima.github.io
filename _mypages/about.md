@@ -15,12 +15,12 @@ profile:
 news: false  # includes a list of news items
 selected_papers: false # includes a list of papers marked as "selected={true}"
 social: false  # includes social icons at the bottom of the page
----
 
+---
 From experimental plasma physics to computational biology, I have a diverse
 academic background and passion for problem solving. Programming has always
-been a part of my work, from which I have developed a strong interest in data 
-science and software engineering. 
+been a part of my work, from which I have developed a strong interest in data
+science and software engineering.
 
 
 <!--Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.-->
