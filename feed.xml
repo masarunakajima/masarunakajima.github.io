@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://masarunakajima.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://masarunakajima.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-10-26T16:33:41+00:00</updated><id>https://masarunakajima.github.io/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+</subtitle><entry><title type="html">Reverse compliment in BAM format</title><link href="https://masarunakajima.github.io/blog/2023/revcomp-byte/" rel="alternate" type="text/html" title="Reverse compliment in BAM format" /><published>2023-07-03T11:39:00+00:00</published><updated>2023-07-03T11:39:00+00:00</updated><id>https://masarunakajima.github.io/blog/2023/revcomp-byte</id><content type="html" xml:base="https://masarunakajima.github.io/blog/2023/revcomp-byte/"><![CDATA[<h2 id="little-bit-about-bam-format">Little bit about BAM format</h2>
+
+<p>The <a href="chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://samtools.github.io/hts-specs/SAMv1.pdf">BAM</a>
+format is used to store sequence alignment information in a compressed,
+binary representation. It is a more compact alternative to the SAM format. The
+<a href="https://github.com/samtools/htslib">HTSlib</a> library provides tools to work
+with the above formats. One of the basic object in this
+library is the <code class="language-plaintext highlighter-rouge">bam_t</code> structure which represents an alignment record. This
+object stores information such as the location of the alignment against the
+reference genome, query sequence, and CIGAR string.</p>
+
+<h2 id="query-sequence">Query sequence</h2>
+
+<p>Today, I wan to focus on the query sequence stored in <code class="language-plaintext highlighter-rouge">bam_t</code> format. Each base is repsented by a 4-bit integer, as shown below.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Base</th>
+      <th>Number</th>
+      <th>Binary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A</td>
+      <td>1</td>
+      <td><code class="language-plaintext highlighter-rouge">0001</code></td>
+    </tr>
+    <tr>
+      <td>C</td>
+      <td>2</td>
+      <td><code class="language-plaintext highlighter-rouge">0010</code></td>
+    </tr>
+    <tr>
+      <td>G</td>
+      <td>4</td>
+      <td><code class="language-plaintext highlighter-rouge">0100</code></td>
+    </tr>
+    <tr>
+      <td>T</td>
+      <td>15</td>
+      <td><code class="language-plaintext highlighter-rouge">1000</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This allows packaging 2 bases in one byte. For example the sequence <code class="language-plaintext highlighter-rouge">ACGTA</code> can
+be represented as <code class="language-plaintext highlighter-rouge">00010010 01001000 00010000</code>. That is, we can represent a
+ <code class="language-plaintext highlighter-rouge">n</code>-long sequences in <code class="language-plaintext highlighter-rouge">ceil(n/2)</code> bytes. Here, let’s call two bases packed in
+ a byte as a <strong>base couple</strong>.</p>
+
+<h2 id="reverse-compliment">Reverse compliment</h2>
+
+<p>In processing alignment data, we often need to reverse compliment the query.
+ For example, we may want to merge a paired-end reads, which involves taking
+ the reverse compliment of the second read. Given a sequence represented in the
+ above format, one way to accomplish is to decode the sequence into a string,
+ take the reverse compliment, and encode it back to the above format. However,
+ it would be faster and memory efficient if we could do this without decoding
+ and encoding the sequence. The method I used is to take the reverse compliment
+ of each base couple and reverse the order of the base couples. The code is
+ shown below.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="kr">inline</span> <span class="kt">void</span>
+<span class="nf">revcom_byte_then_reverse</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p1</span><span class="p">,</span> <span class="o">*</span><span class="n">p2</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">p1</span> <span class="o">=</span> <span class="n">a</span><span class="p">,</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">p2</span> <span class="o">&gt;</span> <span class="n">p1</span><span class="p">;</span> <span class="o">++</span><span class="n">p1</span><span class="p">,</span> <span class="o">--</span><span class="n">p2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">*</span><span class="n">p1</span> <span class="o">=</span> <span class="n">byte_revcom_table</span><span class="p">[</span><span class="o">*</span><span class="n">p1</span><span class="p">];</span>
+    <span class="o">*</span><span class="n">p2</span> <span class="o">=</span> <span class="n">byte_revcom_table</span><span class="p">[</span><span class="o">*</span><span class="n">p2</span><span class="p">];</span>
+    <span class="o">*</span><span class="n">p1</span> <span class="o">^=</span> <span class="o">*</span><span class="n">p2</span><span class="p">;</span>
+    <span class="o">*</span><span class="n">p2</span> <span class="o">^=</span> <span class="o">*</span><span class="n">p1</span><span class="p">;</span>
+    <span class="o">*</span><span class="n">p1</span> <span class="o">^=</span> <span class="o">*</span><span class="n">p2</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">p1</span> <span class="o">==</span> <span class="n">p2</span><span class="p">)</span> <span class="o">*</span><span class="n">p1</span> <span class="o">=</span> <span class="n">byte_revcom_table</span><span class="p">[</span><span class="o">*</span><span class="n">p1</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span>
+<span class="nf">revcomp_seq_by_byte</span><span class="p">(</span><span class="n">bam1_t</span> <span class="o">*</span><span class="n">aln</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="kt">size_t</span> <span class="n">l_qseq</span> <span class="o">=</span> <span class="n">get_qlen</span><span class="p">(</span><span class="n">aln</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">seq</span> <span class="o">=</span> <span class="n">bam_get_seq</span><span class="p">(</span><span class="n">aln</span><span class="p">);</span>
+  <span class="kt">size_t</span> <span class="n">num_bytes</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">l_qseq</span> <span class="o">/</span> <span class="mi">2</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">seq_end</span> <span class="o">=</span> <span class="n">seq</span> <span class="o">+</span> <span class="n">num_bytes</span><span class="p">;</span>
+  <span class="n">revcom_byte_then_reverse</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">seq_end</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">l_qseq</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num_bytes</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">seq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">seq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">seq</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">seq</span><span class="p">[</span><span class="n">num_bytes</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Here, <code class="language-plaintext highlighter-rouge">byte_revcom_table</code> is a lookup table that stores the reverse compliment
+of the base couples. The function <code class="language-plaintext highlighter-rouge">revcom_byte_then_reverse</code> takes two pointers
+and reverse the compliment of the base couples between them. For example, if
+the sequence of base couples is <code class="language-plaintext highlighter-rouge">AC GT TA</code>, then the function will change it to
+<code class="language-plaintext highlighter-rouge">TA AC GT</code>, which is the reverse compliment of the entire sequence. However,
+if the number of bases is odd, then this function outputs a sequence that is
+not quite the reverse compliment. For example, if the sequence of base couples
+is <code class="language-plaintext highlighter-rouge">AC GT T-</code>, then the function will change it to <code class="language-plaintext highlighter-rouge">-A AC GT</code>, where what we
+want is <code class="language-plaintext highlighter-rouge">AA CG T-</code>. The rest of the function <code class="language-plaintext highlighter-rouge">revcomp_seq_by_byte</code> takes care
+of this case.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[Improving the efficiency by working directly with native data structure]]></summary></entry></feed>

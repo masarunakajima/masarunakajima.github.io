@@ -2,7 +2,7 @@
 <html lang="en">
 
   <head>
-    <meta http-equiv="refresh" content="3; url=https://masarunakajima.github.io/" />
+    
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,7 +12,7 @@
   Masaru  Nakajima
 
 
-  | Page not found
+  | dnmtools project
 
 </title>
 <meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
@@ -38,7 +38,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👾</text></svg>">
 
 <link rel="stylesheet" href="/assets/css/main.css">
-<link rel="canonical" href="https://masarunakajima.github.io/404.html">
+<link rel="canonical" href="https://masarunakajima.github.io/projects/dnmtools/">
 
 
 <!-- Dark Mode -->
@@ -199,12 +199,32 @@
       <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Page not found</h1>
-    <p class="post-description">Looks like there has been a mistake. Nothing exists here.</p>
+    <h1 class="post-title">dnmtools project</h1>
+    <p class="post-description">Bioinformatics tool development</p>
   </header>
 
   <article>
-    <p>You will be redirected to the main page within 3 seconds. If not redirected, please click <a href="https://masarunakajima.github.io/">here</a>.</p>
+    <p>I am a committer to
+<a href="https://github.com/smithlabcode/dnmtools" target="_blank" rel="noopener noreferrer">dnmtools</a>, a software suite,
+written primarily in C/C++, for the analysis of DNA methylation data.
+My role in this project was to improve the efficiency of some of the tools,
+and I enjoyed the learning! <a href="https://github.com/smithlabcode/dnmtools/commits?author=masarunakajima" target="_blank" rel="noopener noreferrer">Here</a> is the list of my commits.</p>
+
+<h2 id="formatting-alignment-files">Formatting alignment files</h2>
+
+<p>Computational biologists often work with large files of DNA sequences,
+and it is important that these files are formatted correctly. In the
+context of DNA methylation data, we work with alginment data we call <em>reads</em>.
+These reads are aligned, or mapped, to the reference genome,
+and the alignment data
+are stored in <a href="chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://samtools.github.io/hts-specs/SAMv1.pdf" target="_blank" rel="noopener noreferrer">SAM/BAM</a> format. This is accomplished
+by <code class="language-plaintext highlighter-rouge">dnmtools abismal</code>. We further process the alignment data using
+<code class="language-plaintext highlighter-rouge">dnmtools format</code> to format the the mapped reads for downstream analysis.
+My first task was to improve the efficienty of <code class="language-plaintext highlighter-rouge">dnmtools format</code>.
+I wrote the details in my <a href="../../blog/2023/revcomp-byte">blog</a>.
+The outcome was about 30 % reduction in computation time, which can be
+a lot when you are working with large files.</p>
+
 
   </article>
 
