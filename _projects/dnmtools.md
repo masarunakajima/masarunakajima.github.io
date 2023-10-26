@@ -27,3 +27,4 @@ My first task was to improve the efficienty of `dnmtools format`.
 I wrote the details in my [blog](../../blog/2023/revcomp-byte).
 The outcome was about 30 % reduction in computation time, which can be
 a lot when you are working with large files.
+
