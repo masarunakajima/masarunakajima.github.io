@@ -32,6 +32,10 @@ jobs:
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile') }}
         restore-keys: |
           ${{ runner.os }}-gems-
+    - name: Install system libraries (ImageMagick for rmagick)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libmagickwand-dev imagemagick
     - name: Install deps
       run: |
         gem install bundler
