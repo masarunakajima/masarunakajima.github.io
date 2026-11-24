@@ -1,7 +1,7 @@
 ---
 layout: page
 title: DNMTools (DNA methylation)
-description: Open-source WGBS analysis suite: C++ performance work and pipelines
+description: "Open-source WGBS analysis suite: C++ performance work and pipelines"
 img: assets/img/4.jpg
 importance: 2
 github: https://github.com/smithlabcode/dnmtools
