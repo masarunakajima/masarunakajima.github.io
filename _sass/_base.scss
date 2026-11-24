@@ -205,6 +205,10 @@ blockquote {
 
 .news table th {
   color: var(--global-text-color);
+  white-space: nowrap;
+  width: 6.5rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
 }
 
 // Social (bottom)
