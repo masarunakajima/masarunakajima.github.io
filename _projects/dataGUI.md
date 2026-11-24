@@ -1,11 +1,11 @@
 ---
 layout: page
 title: Data Visualization GUI
-description: Interactive data analysis tool
+description: Interactive spectral-analysis tool for high-volume experimental data (MSc)
 img: assets/img/gui.png
-importance: 1
+importance: 3
 github: https://github.com/masarunakajima/dataViz
-category: work
+category: research
 ---
 ## Data Visualization GUI ([GitHub](https://github.com/masarunakajima/dataViz))
 

@@ -1,11 +1,11 @@
 ---
 layout: page
-title: dnmtools project
-description: Bioinformatics tool development
+title: DNMTools (DNA methylation)
+description: Open-source WGBS analysis suite: C++ performance work and pipelines
 img: assets/img/4.jpg
-importance: 1
+importance: 2
 github: https://github.com/smithlabcode/dnmtools
-category: work
+category: research
 ---
 I am a committer to
 [dnmtools](https://github.com/smithlabcode/dnmtools), a software suite,

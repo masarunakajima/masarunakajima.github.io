@@ -1,20 +1,20 @@
 ---
 layout: page
-title: RNA count (PhD)
-description: Development of a new counting algorithm
+title: Counting RNA secondary structures (PhD)
+description: First polynomial-time algorithm for symmetry-distinct RNA structures
 img: assets/img/rnadist.png
 importance: 1
 github: https://github.com/masarunakajima/distinguishable_count
-category: work
+category: research
 ---
-For my PhD project, I worked on the development of a new algorithm
-for counting distinguishable RNA secondary structures. This work is
-relevant in combinatoric analysis of RNA structures, which is a
-fundamental problem in computational biology. The algorithm I
-developed is the first that solved the problem in polynomial time.
-This work has been accepted for publication in the Journal of
-Computational Biology (publication pending). I implemented the
-algorithm in C++ ([github](https://github.com/masarunakajima/distinguishable_count)).
+For my PhD at USC (Smith Lab), I developed a new algorithm
+for counting distinguishable RNA secondary structures. This problem is
+central to the combinatorial analysis of RNA structures, a
+fundamental topic in computational biology. The algorithm I
+developed is the first to solve the problem in polynomial time.
+It combines group theory with dynamic programming. The work was published in the
+[Journal of Computational Biology (2023)](https://www.liebertpub.com/doi/full/10.1089/cmb.2022.0501). I implemented the
+algorithm in C++ and validated it on a high-performance computing cluster ([GitHub](https://github.com/masarunakajima/distinguishable_count)).
 
 ## Abstract
 
